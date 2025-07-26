@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepMate - Your Interview Preparation Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>PrepMate</h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#resume-match" class="nav-link">Resume Match</a>
+                <a href="#interview-prep" class="nav-link">Interview Prep</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">PrepMate</h1>
+                    <p class="hero-tagline">Your AI-Powered Interview Preparation Companion</p>
+                    <p class="hero-description">
+                        Struggling to land your dream job? PrepMate analyzes your resume against job descriptions, 
+                        provides personalized feedback, and offers interactive interview practice to boost your confidence 
+                        and success rate.
+                    </p>
+                    <button class="cta-button" onclick="scrollToSection('resume-match')">
+                        Get Started <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="hero-animation">
+                    <div class="animated-illustration">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Resume</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Job Match</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-comments"></i>
+                            <span>Interview</span>
+                        </div>
+                        <div class="central-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" onclick="scrollToSection('resume-match')">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Resume & JD Match Section -->
+    <section id="resume-match" class="match-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Resume & Job Description Analyzer</h2>
+                <p>Upload your resume and job description to get instant feedback and match score</p>
+            </div>
+            
+            <div class="upload-container">
+                <div class="upload-row">
+                    <div class="upload-card">
+                        <div class="upload-area" id="resume-upload">
+                            <i class="fas fa-file-upload"></i>
+                            <h3>Upload Resume</h3>
+                            <p>Drag & drop your PDF or click to browse</p>
+                            <input type="file" id="resume-file" accept=".pdf" hidden>
+                            <div class="file-info" id="resume-info" style="display: none;">
+                                <i class="fas fa-file-pdf"></i>
+                                <span id="resume-name"></span>
+                                <button class="remove-file" onclick="removeFile('resume')">×</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-card">
+                        <div class="upload-area jd-area">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h3>Job Description</h3>
+                            <textarea id="jd-text" placeholder="Paste job description here..." rows="8"></textarea>
+                            <div class="file-upload-option">
+                                <span>Or </span>
+                                <input type="file" id="jd-file" accept=".pdf,.txt,.doc,.docx" hidden>
+                                <button class="upload-btn" onclick="document.getElementById('jd-file').click()">
+                                    Upload File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="analyze-button" id="analyze-btn" disabled>
+                    <i class="fas fa-chart-line"></i>
+                    Analyze Match
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-container" id="results-container" style="display: none;">
+                <div class="match-score">
+                    <div class="score-circle">
+                        <div class="score-text">
+                            <span class="score-number" id="match-score">85</span>
+                            <span class="score-label">%</span>
+                        </div>
+                        <svg class="score-ring">
+                            <circle cx="60" cy="60" r="50" class="score-background"></circle>
+                            <circle cx="60" cy="60" r="50" class="score-progress" id="score-progress"></circle>
+                        </svg>
+                    </div>
+                    <h3>Resume Match Score</h3>
+                </div>
+                
+                <div class="suggestions-panel">
+                    <h3><i class="fas fa-lightbulb"></i> Improvement Suggestions</h3>
+                    <div class="suggestions-list" id="suggestions-list">
+                        <!-- Suggestions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interview Prep Section -->
+    <section id="interview-prep" class="prep-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Interview Preparation</h2>
+                <p>Practice with flashcards and take mock interviews to ace your next interview</p>
+            </div>
+            
+            <div class="prep-tabs">
+                <button class="tab-button active" onclick="switchTab('flashcards')">
+                    <i class="fas fa-layer-group"></i>
+                    Flashcards
+                </button>
+                <button class="tab-button" onclick="switchTab('mock-interview')">
+                    <i class="fas fa-microphone"></i>
+                    Mock Interview
+                </button>
+            </div>
+
+            <!-- Flashcards Tab -->
+            <div id="flashcards-tab" class="tab-content active">
+                <div class="flashcard-container">
+                    <div class="flashcard" id="flashcard">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <div class="card-header">
+                                    <span class="card-number">1 / 10</span>
+                                    <span class="card-category">Behavioral</span>
+                                </div>
+                                <div class="card-question">
+                                    <h3>Tell me about a time when you faced a challenging situation at work and how you handled it.</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="flip-button" onclick="flipCard()">
+                                        <i class="fas fa-sync-alt"></i>
+                                        Show Answer Tips
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flashcard-back">
+                                <div class="card-header">
+                                    <span class="card-number">1 / 10</span>
+                                    <span class="card-category">Answer Tips</span>
+                                </div>
+                                <div class="card-answer">
+                                    <h4>STAR Method Approach:</h4>
+                                    <ul>
+                                        <li><strong>Situation:</strong> Describe the context</li>
+                                        <li><strong>Task:</strong> Explain your responsibility</li>
+                                        <li><strong>Action:</strong> Detail what you did</li>
+                                        <li><strong>Result:</strong> Share the outcome</li>
+                                    </ul>
+                                    <p><strong>Tip:</strong> Choose a real example that shows problem-solving and positive results.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="flip-button" onclick="flipCard()">
+                                        <i class="fas fa-sync-alt"></i>
+                                        Show Question
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flashcard-controls">
+                        <button class="control-btn" onclick="previousCard()">
+                            <i class="fas fa-chevron-left"></i>
+                            Previous
+                        </button>
+                        <button class="control-btn primary" onclick="nextCard()">
+                            Next
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mock Interview Tab -->
+            <div id="mock-interview-tab" class="tab-content">
+                <div class="interview-container">
+                    <div class="interview-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="interview-progress"></div>
+                        </div>
+                        <span class="progress-text">Question <span id="current-question">1</span> of <span id="total-questions">5</span></span>
+                    </div>
+                    
+                    <div class="interview-question-card">
+                        <div class="interviewer-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="question-content">
+                            <h3 id="interview-question">Tell me about yourself and why you're interested in this position.</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="answer-section">
+                        <textarea 
+                            id="user-answer" 
+                            placeholder="Type your answer here..." 
+                            rows="6"
+                        ></textarea>
+                        <div class="answer-controls">
+                            <div class="word-count">
+                                <span id="word-count">0</span> words
+                            </div>
+                            <button class="submit-answer-btn" onclick="submitAnswer()">
+                                <i class="fas fa-paper-plane"></i>
+                                Submit Answer
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="interview-controls">
+                        <button class="control-btn" onclick="previousQuestion()" id="prev-question-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                            Previous
+                        </button>
+                        <button class="control-btn primary" onclick="nextQuestion()" id="next-question-btn">
+                            Next Question
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
