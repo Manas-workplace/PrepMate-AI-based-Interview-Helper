@@ -33,5 +33,5 @@
  1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/prepmate-dashboard.git
+git clone https://github.com/Manas-workplace/PrepMate-AI-based-Interview-Helper
 cd prepmate-dashboard
